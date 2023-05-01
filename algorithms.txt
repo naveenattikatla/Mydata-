@@ -1,0 +1,377 @@
+Binary search
+	vector<int > v = {14,2,6,1};
+	int target ;
+	cin>>target;
+	
+	sort(v.begin(),v.end());
+	// sorting Array is 1 2 6 14 
+	int start = 0 , end = v.size()-1 ;
+	bool flag = false;
+	while(start <=  end ){
+		int mid = (start +  end) / 2 ;
+		cout<<"mid is"<<'{'<<mid << '}'<<endl;
+	if (v[mid]==target){
+		cout<<"Found"<<endl;
+		flag = true;
+		break;
+	}
+	if(v[mid] > target) {
+		end =  mid -1 ;
+	
+	}else{
+		start  =  mid + 1 ;
+		
+	}
+	}
+	if(!flag){
+		cout<<"Not found"<<endl;
+	}
+	
+time complexity is logn 
+
+insertion sorting 
+vector<int > v = {14,2,6,1,5,13};
+	
+	cout<<"Elements in  array"<<endl;
+	
+	for(int i=0;i<v.size();i++){
+		cout<<v[i]<<" " ;
+	}
+	cout<<endl;
+	
+	
+	for(int i =1 ; i < v.size();i++){
+	
+		int key = v[i];
+		int j =  i - 1;
+		while(j >= 0 and v[j] > key){
+			v[j+1] = v[j] ;
+			j--;
+		}
+		j++;
+		v[j] = key ;
+}
+
+	cout<<"Elements in sorted array"<<endl;
+	
+	for(int i=0;i<v.size();i++){
+		cout<<v[i]<<" " ;
+	}
+	cout<<endl;
+
+time complexity in worst case = order of n ^ 2 opearations 
+best case it takes order of n operations
+average case ,it takes order of n^2 operations
+
+
+
+mergesort algorithms
+void merging(vector<int>  &a , int start , int mid , int end ){
+	int n1 = mid - start  + 1 ;
+	int n2 = end - mid ;
+	vector<int> v1(n1+1);
+	vector<int> v2(n2+1);
+	int j=0;
+	for(int i = start ;i <= mid;i++){
+		v1[j++]=a[i];
+	}
+	v1[j] = INFINITY;
+	
+	j=0;
+	
+	for(int i=mid + 1 ;i<= end ; i++ ){
+		v2[j++]=a[i];
+	}
+	v2[j]= INFINITY;
+	
+	vector<int > v3(n1+n2);
+	int i = 0 ;
+	j = 0 ;
+	for(int k = 0; k<v3.size() ;k++){
+		if(v1[i] < v2[j]){
+			v3[k]=v1[i];
+			i++;
+		}else {
+			v3[k] = v2[j] ;
+			j++;
+		}
+	}
+	j = 0;
+	for(i = start ; i<= end ;i++){
+		a[i] = v3[j++];
+	}
+	
+
+}
+void mergesort(vector<int> &a,int start ,int end ){
+	if(start < end ){
+	int mid =  ( start + end ) / 2 ;
+	mergesort(a , start , mid ) ;
+	mergesort(a , mid + 1 , end ) ; 
+	merging(a, start , mid , end ) ; 
+}
+}
+time complexity of mergesort algorithm is order of nlogn 
+
+
+quicksort 
+
+
+int pivoting(vector<int> &a , int start ,int end ){
+	int pE = a[end] ; 
+	
+	int first = start - 1 ;
+	int temp ;
+	for(int i = start ; i < end ; i++){
+		    if(a[i] <= pE){
+		    	first ++ ;
+		    	temp = a[first] ;
+		    	a[first] = a[i] ; 
+		    	a[i] = temp ;
+			}
+		    
+	}
+		
+	temp = a[++first] ; 
+	a[first ] = pE;
+	a[end] = temp ;
+	return first ;
+}
+
+
+void quicksort(vector<int> &v,int start ,int end){
+	if(start < end ){
+		
+	int pivot = pivoting(v , start , end ) ;
+	quicksort(v,start,pivot-1);
+	quicksort(v,pivot+1,end) ;
+}
+}
+selection sort 
+for(int i=0 ;i < v.size()-1;i++){
+		for(int j = 0 ; j < v.size()-1 - i  ; j ++ ) {
+	     	if(v[j]> v[j+1])  {
+			int temp = v[j] ;
+			v[j]= v[j+1];
+			v[j+1] = temp;
+		}
+	 }
+	}
+time complexity is order of n ^ 2 opearions in worst case 
+in best case order of n operations
+
+bubble sorting 
+	for(int i=0 ;i < v.size()-1;i++){
+		int minindex = i ;
+		for(int j = i + 1   ; j < v.size()  ; j ++ ) {
+			 if(v[minindex] > v[j])
+			{
+			 minindex = j ;
+		}
+	 }
+	 int temp = v[i] ;
+	 v[i] = v[minindex] ;
+	 v[minindex] = temp ;
+	}
+
+greedy algorithm for fractional knapsack problem 
+#include<bits/stdc++.h>{
+	int cnt;
+	cin>>cnt;
+	vector<int> p(cnt); // profit container which contains profits of an objects ;
+	int num  ;
+	for(int i= 0 ; i< cnt ; i++){
+		cin>>p[i];
+	}
+	vector<int> w(cnt); // weight of objects as an array ;
+	for(int i= 0 ; i< cnt ; i++){
+		cin>>w[i];
+	}
+	int capacity ;
+	cin>>capacity ;
+	vector<float> pbw(cnt);
+	for(int i = 0 ; i < cnt ;i++  ){
+		pbw[i] = p[i]/float(w[i]);
+	}
+	
+	vector<pair<float,pair<int ,int >>> v;
+	for(int i = 0 ; i < cnt  ; i++ ){
+		v.push_back({pbw[i],{p[i],w[i]}}) ;
+	
+	}
+
+	// lets sort them based on profit by weight 
+	
+	sort(v.begin(),v.end(),sortbypbyw) ;
+	
+	// lets do actual procedure
+	float profit = 0.0 ;
+	int i ;
+	for(i = 0 ; i < cnt  ; i++){
+		if(capacity >  0 and v[i].second.second <= capacity ){
+			capacity =capacity-v[i].second.second ;
+			// cout<<"capacity is {"<<capacity<<"}"<<endl;
+			profit +=v[i].second.first;
+		}else{
+			break ;
+		}
+	}
+	// fractional knapsack problem 
+	if(capacity >  0 ){
+		profit += v[i].second.first*( float(capacity)/ v[i].second.second ) ;
+		
+	}
+	cout<<"profit is "<<profit<<endl;
+	return 0 ;
+}
+matrix exponentiaition 
+   Write C++ code here
+     prime  number 
+    vector<vector<int > > v={
+        {1,1},
+        {1,0}
+    };
+    vector<vector<int > > v1={
+        {1},
+        {1}
+    };
+
+    vector<vector<int>> v2(v.size());
+    
+    
+    
+    v2=multiply(v,v1);
+    cout<<"chekcing workflow of matrix multiplication"<<endl;
+    for(int i =0 ; i < v2.size(); i++){
+        for(int j =0 ; j < v2[0].size()  ; j++)
+        {
+            cout<<v2[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    
+    
+
+	int n ;
+	// cin>>n;
+	vector<int> v={1,2,3,4,5,6,7};
+	for(int i = 0; i< n ;i++)
+	{
+		int num ;
+		cin>>num;
+		v.push_back(num);
+	}
+ logic goes here 
+	for(int i = (v.size()-1 ) / 2 ;i >= 0 ;i--)
+		heapify(v,i);
+	
+	cout<<"Elements"<<endl;
+	for(int i = 0 ;  i < v.size() ;i++ )
+		cout<<v[i]<<" ";
+	cout<<endl;
+	
+
+0 1 knapsack problem using recursion 
+int maximumProfit(vector<int> &p ,vector<int> &w,int c ,int n)	{
+	
+	if(n == 0  || c == 0) {
+		return 0 ; 
+	}
+	if(w[n-1] > c){
+		return maximumProfit(p,w,c,n-1);
+	}else{
+		return max(
+			p[n-1]+maximumProfit(p,w,c-w[n-1] , n-1 ) ,
+			maximumProfit(p ,w , c , n-1) 
+		) ;
+	}
+	
+	
+}
+0 1 knapsack problem
+void knapsackproblem(){
+	int cnt;
+	cin>>cnt;
+	vector<int> p(cnt); // profit container which contains profits of an objects ;
+	for(int i= 1 ; i<= cnt ; i++){
+		cin>>p[i];
+	}
+	vector<int> w(cnt); // weight of objects as an array ;
+	for(int i= 1 ; i<= cnt ; i++){
+		cin>>w[i];
+	}
+	
+	int capacity ;
+	cin>>capacity ;
+	vector<int> row(capacity+1);
+	vector<vector<int>> T(cnt+1,row);
+	
+	for(int i = 0 ; i <= capacity ; i++)
+		T[0][i]=0;
+	for(int i = 1 ; i <= cnt ; i++){
+		T[i][0] = 0 ;
+		
+		for(int j = 1 ; j <= capacity ; j++){
+			if(w[i] <= j and T[i-1][j-w[i]] + p[i] > T[i-1][j] ){
+				T[i][j] = T[i-1][j-w[i]] + p[i] ;
+			}else{
+				T[i][j] = T[i-1][j] ;
+			}
+		}
+	}
+	cout<<T[cnt][capacity]<<endl;
+
+	return 0 ;
+}
+implementation graph using adjent matrix 
+#include<bits/stdc++.h>
+using namespace std ;
+class Graph{
+	vector<vector<int>> adjMatrix;
+	
+	public :
+	Graph(const vector<pair<int,int >> &edges,int n ){
+		adjMatrix.resize(n, vector<int> (n));
+		// pushing Elements in adjMatrix for directed graph 
+		// for undirected graph we have push elemenst in both ends 
+		for(pair<int ,int > p : edges){
+			adjMatrix[p.first][p.second] = true ; 
+			adjMatrix[p.second][p.first] = true ; 
+		}
+	}
+	void addEdge(pair<int,int> const &p){
+		adjMatrix[p.first][p.second] = true ;
+		adjMatrix[p.second][p.first] = true ; 
+	}
+	void removeEdge(pair<int,int> const &p){
+		adjMatrix[p.first][p.second] = false;
+		adjMatrix[p.second][p.first] = false; 
+	}
+	void printing(int n ){
+		cout<<"printing adjmatrix "
+		for(int i = 0 ; i < n ; i++){
+			for(int j = 0 ; j < n ; j++){
+				cout<<adjMatrix[i][j]<<" " ;
+			}
+			cout<<endl;
+		}
+	}
+	void DFS(int start){
+		
+	}
+};
+int main(){
+	vector<pair<int,int >> v ;
+	int n ;
+	cin>>n;
+	int a , b ;
+	for(int i = 0 ; i < n ; i++){
+		cin>>a>>b;
+		v.push_back({a,b});
+	}
+	Graph g(v,n);
+	g.printing(n); // printing Elements in adjMatrix
+	
+	return 0 ;
+}

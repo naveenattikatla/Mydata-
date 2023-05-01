@@ -1,0 +1,37 @@
+c++ for competative programming language
+
+number of ways to define vectors :
+vector<int> a;->default constructor is called whose size and capacity is zero
+
+a.push_back(6) -> allocates one unit of memory with content
+
+vector<int> b(a)-> a special type of parametric constructor is called -> default copy constructor and copies the content of a vector to b vector
+
+//  vector<char> c(b) -> you cannot invoke a copy coonstructor of different types  // COMPILER ERROR
+
+vector<int> d(5,66) - > creates a vector of size of 5 and initilizes the vector with 66 content
+
+vector<int> e(a.begin(),a.end()) - > everything inside the iterators will be copies into e vector
+
+a.begin() - > pointing the begining of the vector
+a.end() - > poiting a[size] of a vector // Generally a is poining the next location of end element of  a vector
+
+
+Accessing an element using square bracket is unsafe ,illegal
+you can access an element using at function in c++
+a.at(1) - >  // Throws an error if we  are accessing an element of out of range
+at function provides safe features 
+
+# If yu are confident enough tha you will not access element outside the range then you can use square bracket notation to access elements in a vector 
+
+v.front() -> return first element of a vector
+v.back()  -> return  last element of a vector
+
+	vector<int> v1(v) // v={1,2,3,4,5,6,7,8,9,10}
+	v.clear() //  memory is still there but Vector becomes empty 
+	// Memory has been allocated for vector is stil there but you cannot access Content using square brackes
+	// It means v.size() = 0
+methods in divide and conquer stratigy:
+1->you solve the problem for n-1 size and some how solve the entire problem;
+2->solve the problem of size n/2 elements and same for remaining n/2 elements
+	
